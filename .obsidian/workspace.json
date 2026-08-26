@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-基础入门/分层模型与常见协议.md",
+                "file": "01-基础入门/字节、编码与数据边界.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "分层模型与常见协议"
+              "title": "字节、编码与数据边界"
             }
           }
         ]
@@ -187,9 +187,12 @@
   },
   "active": "a1f1d5f935c98759",
   "lastOpenFiles": [
-    "01-基础入门/网络观察工具.md",
-    "01-基础入门/分层模型与常见协议.md",
+    "notes.md",
+    "task_plan.md",
     "01-基础入门/网络通信概览.md",
+    "01-基础入门/字节、编码与数据边界.md",
+    "01-基础入门/分层模型与常见协议.md",
+    "01-基础入门/网络观察工具.md",
     "08-C与Linux深入/README.md",
     "00-索引/README.md",
     "00-索引/关系图.md"
