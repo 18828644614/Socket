@@ -2,7 +2,7 @@
 type: topic
 status: complete
 created: 2026-08-25
-updated: 2026-08-27
+updated: 2026-08-28
 tags:
   - TCP
   - 服务器
@@ -529,6 +529,191 @@ cl /W4 /Zi server.c ws2_32.lib
 ~~~
 
 本仓库的 [server.c](../src/socket/server.c) 提供了 Windows 下“创建、绑定、监听”的对应起点；完成 `accept()` 与收发的思路与本章 Linux 示例相同。
+
+### 10.1 完整的 Windows Winsock 回显服务器
+
+下面是与 Linux 回显服务器功能对应的 Windows 版本。它同样一次处理一个客户端：连接建立后，循环调用 `recv()`，收到多少字节就用 `send_all()` 返回多少字节；客户端关闭后，再回到 `accept()` 等待下一位客户端。
+
+~~~c
+#define _WIN32_WINNT 0x0600
+
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <stdio.h>
+#include <string.h>
+
+#pragma comment(lib, "Ws2_32.lib")
+
+#define SERVER_PORT 8080
+#define BUFFER_SIZE 1024
+
+/* Winsock 使用 int 表示一次 send() 的长度。 */
+static int send_all(SOCKET sock, const char *buffer, int length) {
+    int sent = 0;
+
+    while (sent < length) {
+        int n = send(sock, buffer + sent, length - sent, 0);
+        if (n > 0) {
+            sent += n;
+            continue;
+        }
+
+        int error = WSAGetLastError();
+        if (error == WSAEINTR) {
+            continue;               /* 被信号/系统事件打断，重试 */
+        }
+
+        printf("send failed: %d\n", error);
+        return -1;
+    }
+    return 0;
+}
+
+int main(void) {
+    WSADATA wsa_data;
+    int result = WSAStartup(MAKEWORD(2, 2), &wsa_data);
+    if (result != 0) {
+        printf("WSAStartup failed: %d\n", result);
+        return 1;
+    }
+
+    SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (listen_sock == INVALID_SOCKET) {
+        printf("socket failed: %d\n", WSAGetLastError());
+        WSACleanup();
+        return 1;
+    }
+
+    BOOL opt = TRUE;
+    if (setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR,
+                   (const char *)&opt, sizeof opt) == SOCKET_ERROR) {
+        printf("setsockopt failed: %d\n", WSAGetLastError());
+        closesocket(listen_sock);
+        WSACleanup();
+        return 1;
+    }
+
+    struct sockaddr_in server_addr = {0};
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERVER_PORT);
+    server_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+    if (bind(listen_sock,
+             (const struct sockaddr *)&server_addr,
+             sizeof server_addr) == SOCKET_ERROR) {
+        printf("bind failed: %d\n", WSAGetLastError());
+        closesocket(listen_sock);
+        WSACleanup();
+        return 1;
+    }
+
+    if (listen(listen_sock, 16) == SOCKET_ERROR) {
+        printf("listen failed: %d\n", WSAGetLastError());
+        closesocket(listen_sock);
+        WSACleanup();
+        return 1;
+    }
+
+    printf("listening on 127.0.0.1:%d\n", SERVER_PORT);
+
+    for (;;) {
+        struct sockaddr_in client_addr;
+        int client_addr_len = sizeof client_addr;
+        SOCKET client_sock = accept(
+            listen_sock,
+            (struct sockaddr *)&client_addr,
+            &client_addr_len);
+
+        if (client_sock == INVALID_SOCKET) {
+            printf("accept failed: %d\n", WSAGetLastError());
+            break;
+        }
+
+        char ip[INET_ADDRSTRLEN];
+        if (InetNtopA(AF_INET, &client_addr.sin_addr,
+                      ip, sizeof ip) == NULL) {
+            strcpy(ip, "<unknown>");
+        }
+        printf("client connected: %s:%u\n",
+               ip, ntohs(client_addr.sin_port));
+
+        char buffer[BUFFER_SIZE];
+        for (;;) {
+            int count = recv(client_sock, buffer, sizeof buffer, 0);
+            if (count > 0) {
+                printf("received %d bytes\n", count);
+                if (send_all(client_sock, buffer, count) == -1) {
+                    break;
+                }
+            } else if (count == 0) {
+                printf("client closed the connection\n");
+                break;
+            } else {
+                int error = WSAGetLastError();
+                if (error == WSAEINTR) {
+                    continue;
+                }
+                printf("recv failed: %d\n", error);
+                break;
+            }
+        }
+
+        closesocket(client_sock);   /* 只关闭当前客户端 */
+    }
+
+    closesocket(listen_sock);
+    WSACleanup();
+    return 0;
+}
+~~~
+
+这段代码中有几个 Windows 专属点：
+
+1. `WSAStartup()` 必须在第一次使用 Winsock 前调用；程序结束时用 `WSACleanup()` 配对清理。
+2. Socket 类型是 `SOCKET`，不能用 `int client_sock = -1` 判断失败；要比较 `INVALID_SOCKET`。
+3. `accept()` 的地址长度使用 `int`，与 Linux 的 `socklen_t` 不同。
+4. `recv()`/`send()` 失败后使用 `WSAGetLastError()`，不能使用 Linux 的 `errno` 和 `perror()`。
+5. Windows 没有 Linux 默认的 `SIGPIPE` 行为，因此不需要写 `signal(SIGPIPE, SIG_IGN)`。
+6. `closesocket()` 只能关闭 Socket；`WSACleanup()` 负责释放 Winsock 库资源，二者不能互相替代。
+
+编译方式：
+
+~~~powershell
+# MinGW-w64：命令行链接 Winsock 库
+gcc -Wall -Wextra -g server_win.c -o server_win.exe -lws2_32
+
+# Visual Studio Developer PowerShell：使用源文件中的 pragma，或显式链接库
+cl /W4 /Zi server_win.c
+# 也可以写成：cl /W4 /Zi server_win.c ws2_32.lib
+~~~
+
+如果希望局域网中的其他设备访问，把：
+
+~~~c
+server_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+~~~
+
+改为：
+
+~~~c
+server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+~~~
+
+然后使用 Windows 防火墙允许 TCP `8080` 入站连接。初学练习建议继续使用 `INADDR_LOOPBACK`，这样只允许本机客户端访问，更安全也更容易排错。
+
+Windows 下可在 PowerShell 中查看监听端口：
+
+~~~powershell
+Get-NetTCPConnection -LocalPort 8080 -State Listen
+~~~
+
+如果系统没有该 cmdlet，也可以使用：
+
+~~~powershell
+netstat -ano | Select-String ":8080"
+~~~
+
+输出中的 `LISTENING` 表示服务器已经完成 `bind()` 和 `listen()`；若显示 `ESTABLISHED`，说明已经存在一条已建立的客户端连接。
 
 ## 11. 常见错误与排查
 
