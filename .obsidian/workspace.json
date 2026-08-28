@@ -29,12 +29,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02-TCP Socket/连接生命周期.md",
+                "file": "src/socket/server.c说明.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "连接生命周期"
+              "title": "server.c说明"
             }
           }
         ],
@@ -205,16 +205,19 @@
   },
   "active": "d03291127b72e357",
   "lastOpenFiles": [
+    "src/socket/client.c",
+    "src/socket/新建文本文档.txt",
+    "src/socket/server.c",
+    "02-TCP Socket/连接生命周期.md",
+    "src/socket/server.c说明.md",
     "02-TCP Socket/README.md",
     "02-TCP Socket/TCP服务器.md",
     "02-TCP Socket/TCP客户端.md",
-    "02-TCP Socket/连接生命周期.md",
     "task_plan.md",
     "tcp_server_notes.md",
     "02-TCP Socket/TCP回显项目.md",
     "02-TCP Socket/Socket基础.md",
     "src/socket/server.exe",
-    "src/socket/server.c",
     "src/socket/server.cpp",
     "src/socket",
     "01-基础入门/README.md",
@@ -225,7 +228,6 @@
     "src/program1/socket1",
     "src/program1",
     "src",
-    "新建文件夹",
     "Socket编程环境.md",
     "01-基础入门/字节、编码与数据边界.md",
     "01-基础入门/TCP与UDP概念.md",
