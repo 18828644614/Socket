@@ -35,6 +35,40 @@ apply_patch verification failed: Failed to read E:\Linux\socket\发送与接收�
 
 ---
 
+## [ERR-20260831-001] node_static_check_command
+
+**Logged**: 2026-08-31T15:00:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### 摘要（Summary）
+静态编译检查命令因 Node.js `-e` 脚本多写一个右花括号而失败，未影响文档内容。
+
+### 原始错误（Error）
+```text
+SyntaxError: Unexpected token '}'
+```
+
+### 上下文（Context）
+- 通过 Node.js 读取 Markdown 中的 C 代码块，并把 Linux 代码送入 GCC 标准输入进行语法检查。
+- 命令末尾的循环闭合符号数量不匹配，导致脚本在执行前解析失败。
+
+### 建议修复（Suggested Fix）
+删除多余的 `}` 后重新执行静态检查命令。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 02-TCP Socket/TCP聊天室项目.md
+- See Also: none
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-08-31T15:00:00+08:00
+- **Commit/PR**: none
+- **Notes**: 已修正命令并重新执行检查。
+
+---
+
 ## [ERR-20260831-001] code_block_extraction_index
 
 **Logged**: 2026-08-31T00:00:00+08:00
