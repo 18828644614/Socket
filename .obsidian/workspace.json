@@ -24,17 +24,17 @@
             }
           },
           {
-            "id": "59d8641aa965045f",
+            "id": "e36e5ae33cb140d0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "02-TCP Socket/发送与接收数据.md",
+                "file": "02-TCP Socket/TCP聊天室项目.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "发送与接收数据"
+              "title": "TCP聊天室项目"
             }
           }
         ],
@@ -100,7 +100,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "765e0dd354fdd260",
@@ -202,11 +203,19 @@
       "bases:新建数据库": false
     }
   },
-  "active": "59d8641aa965045f",
+  "active": "e36e5ae33cb140d0",
   "lastOpenFiles": [
     "02-TCP Socket/README.md",
-    "02-TCP Socket/连接生命周期.md",
+    "02-TCP Socket/超时、断线与异常.md",
+    "02-TCP Socket/TCP回显项目.md",
+    "src/socket_echo/client.exe",
+    "src/socket_echo/server.exe",
+    "src/socket_echo/client.c",
+    "src/socket_echo/server.c",
+    "src/socket_echo",
+    "02-TCP Socket/消息边界与拆包.md",
     "02-TCP Socket/发送与接收数据.md",
+    "02-TCP Socket/连接生命周期.md",
     "task_notes.md",
     "src/socket/server.c说明.md",
     "src/socket/client.c",
@@ -216,18 +225,12 @@
     "02-TCP Socket/TCP客户端.md",
     "task_plan.md",
     "tcp_server_notes.md",
-    "02-TCP Socket/TCP回显项目.md",
     "02-TCP Socket/Socket基础.md",
     "src/socket/server.exe",
     "src/socket/server.cpp",
-    "src/socket",
     "01-基础入门/README.md",
     "01-基础入门/Socket编程环境.md",
     "01-基础入门/网络观察工具.md",
-    "src/program1/socket1.exe",
-    "src/program1/socket1.c",
-    "src/program1/socket1",
-    "src/program1",
     "Socket编程环境.md",
     "01-基础入门/字节、编码与数据边界.md",
     "01-基础入门/TCP与UDP概念.md",

@@ -35,6 +35,42 @@ apply_patch verification failed: Failed to read E:\Linux\socket\发送与接收�
 
 ---
 
+## [ERR-20260831-001] code_block_extraction_index
+
+**Logged**: 2026-08-31T00:00:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### 摘要（Summary）
+提取 Markdown 中 C 代码块做编译检查时，误把代码块索引当成包含伪代码块，导致 Windows 客户端临时文件没有生成。
+
+### 原始错误（Error）
+```text
+InvalidOperation: Cannot index into a null array.
+cc1.exe: fatal error: C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\socket_boundary_check\\win_client.c: No such file or directory
+```
+
+### 上下文（Context）
+- 文档中的伪代码使用了三反引号代码围栏，Linux/Windows 完整示例使用了 `~~~c`。
+- 正则只匹配 `~~~c`，实际得到 4 个完整 C 代码块，而不是预期的 5 个。
+- 该错误只影响临时验证命令，不影响文档内容。
+
+### 建议修复（Suggested Fix）
+提取代码块前先统计匹配数量并按实际顺序确认索引；更稳妥的做法是给临时文件使用明确的代码块标记或直接从文档复制目标块。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 02-TCP Socket/消息边界与拆包.md
+- See Also: none
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-08-31T00:00:00+08:00
+- **Commit/PR**: none
+- **Notes**: 已按实际 4 个 `~~~c` 代码块重新提取 Windows 服务端和客户端，并继续编译验证。
+
+---
+
 ## [ERR-20260828-002] wsl_compile_access_denied
 
 **Logged**: 2026-08-28T15:50:00+08:00
