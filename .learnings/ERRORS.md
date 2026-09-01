@@ -105,6 +105,42 @@ cc1.exe: fatal error: C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\socket_boundary
 
 ---
 
+## [ERR-20260901-002] markdown_code_block_selection
+
+**Logged**: 2026-09-01T00:00:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### 摘要（Summary）
+对 Markdown 中的 C 代码块进行语法检查时，第一次按错误索引提取了教学片段，而不是完整 Windows 示例。
+
+### 原始错误（Error）
+```text
+<stdin>:2:29: error: invalid application of 'sizeof' to incomplete type 'struct sockaddr_in'
+<stdin>:2:16: error: implicit declaration of function 'recvfrom' [-Wimplicit-function-declaration]
+```
+
+### 上下文（Context）
+- 文档前四个 `~~~c` 代码块是函数片段，用于解释 API 参数和字符串结尾。
+- 完整 Windows 服务端和客户端分别位于第 5、6 个 C 代码块。
+- 错误只发生在临时语法检查命令，不影响 Markdown 中的完整示例。
+
+### 建议修复（Suggested Fix）
+提取前先输出代码块数量和每块首行，再按确认后的索引检查完整示例。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 03-UDP Socket/UDP基础.md
+- See Also: ERR-20260831-001
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-09-01T00:00:00+08:00
+- **Commit/PR**: 未提交
+- **Notes**: 已确认完整 Windows 示例位于索引 4 和 5，并将使用正确索引重新检查。
+
+---
+
 ## [ERR-20260828-002] wsl_compile_access_denied
 
 **Logged**: 2026-08-28T15:50:00+08:00
@@ -169,5 +205,161 @@ collect2.exe: error: ld returned 1 exit status
 - **Resolved**: 2026-08-28T15:55:00+08:00
 - **Commit/PR**: none
 - **Notes**: 已确认文档中的 MinGW 命令把 `-lws2_32` 放在源文件名之后；重试测试将使用正确顺序。
+
+---
+
+## [ERR-20260901-001] apply_patch
+
+**Logged**: 2026-09-01T00:00:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: docs
+
+### 摘要（Summary）
+尝试对同一个 Markdown 文件同时执行删除和新增操作时，补丁工具拒绝执行，未产生文件修改。
+
+### 原始错误（Error）
+```text
+apply_patch verification failed: invalid patch: multiple operations target E:\\Linux\\socket\\03-UDP Socket\\UDP基础.md
+```
+
+### 上下文（Context）
+- 使用 `apply_patch` 以删除后新增的方式整体替换 `03-UDP Socket/UDP基础.md`。
+- 工具要求同一路径只使用一次操作。
+
+### 建议修复（Suggested Fix）
+整体替换已有文件时，使用单个 `Update File` 操作，而不是组合 `Delete File` 与 `Add File`。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 03-UDP Socket/UDP基础.md
+- See Also: none
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-09-01T00:00:00+08:00
+- **Commit/PR**: 未提交
+- **Notes**: 已改用单一更新操作继续编辑。
+
+---
+
+## [ERR-20260901-003] wsl_compile_access_denied
+
+**Logged**: 2026-09-01T13:52:41+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: tests
+
+### 摘要（Summary）
+尝试在 WSL 中语法检查 UDP Linux 示例时，WSL 实例因访问被拒绝而无法启动，未能完成 Linux 侧的实际编译验证。
+
+### 原始错误（Error）
+```text
+Wsl/Service/CreateInstance/E_ACCESSDENIED
+```
+
+### 上下文（Context）
+- Windows 版本的完整服务端与客户端已由 `x86_64-w64-mingw32-gcc` 完成语法检查。
+- Linux 示例从 `03-UDP Socket/UDP客户端与服务器.md` 的完整 C 代码块提取，并通过 `wsl.exe -- bash -lc` 调用 GCC。
+
+### 建议修复（Suggested Fix）
+在可正常启动的 WSL 或 Linux 环境中，对两个 Linux 示例执行 `gcc -Wall -Wextra -Werror -fsyntax-only`。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 03-UDP Socket/UDP客户端与服务器.md
+- See Also: ERR-20260828-002
+
+---
+
+## [ERR-20260901-004] apply_patch
+
+**Logged**: 2026-09-01T14:05:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: docs
+
+### 摘要（Summary）
+尝试对同一个 Markdown 文件同时执行删除和新增操作时，补丁工具拒绝执行，文件未被修改。
+
+### 原始错误（Error）
+```text
+apply_patch verification failed: invalid patch: multiple operations target E:\\Linux\\socket\\03-UDP Socket\\数据报与地址.md
+```
+
+### 上下文（Context）
+- 为扩充 `03-UDP Socket/数据报与地址.md` 组织了删除后新增的整体替换补丁。
+- 工具要求同一路径只能出现一个操作。
+
+### 建议修复（Suggested Fix）
+整体替换现有文件时，使用单个 `Update File` 操作。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 03-UDP Socket/数据报与地址.md
+- See Also: ERR-20260901-001
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-09-01T14:05:00+08:00
+- **Commit/PR**: 未提交
+- **Notes**: 已切换为单一更新操作继续编辑。
+
+---
+
+## [ERR-20260901-005] wsl_compile_access_denied
+
+**Logged**: 2026-09-01T14:10:00+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: tests
+
+### 摘要（Summary）
+再次尝试在 WSL 中语法检查本章 Linux 示例时，WSL 实例因访问被拒绝而无法启动。
+
+### 原始错误（Error）
+```text
+Wsl/Service/CreateInstance/E_ACCESSDENIED
+```
+
+### 上下文（Context）
+- Windows 服务端和客户端代码已使用 MinGW GCC 完成严格语法检查。
+- Linux 示例通过 `wsl.exe -- bash -lc` 调用 GCC，但 WSL 服务拒绝创建实例。
+
+### 建议修复（Suggested Fix）
+在可正常启动的 WSL 或 Linux 环境中运行 `gcc -std=c11 -Wall -Wextra -Werror -fsyntax-only` 检查两个 Linux 示例。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 03-UDP Socket/数据报与地址.md
+- See Also: ERR-20260901-003
+
+---
+
+## [ERR-20260901-006] get_net_route_access_denied
+
+**Logged**: 2026-09-01T16:09:29+08:00
+**Priority**: low
+**Status**: pending
+**Area**: infra
+
+### 摘要（Summary）
+尝试读取当前 Windows 默认 IPv4 路由以识别主要网络接口时，系统拒绝访问；不影响根据已提供的网卡地址解释广播范围。
+
+### 原始错误（Error）
+```text
+Get-NetRoute:
+拒绝访问
+```
+
+### 上下文（Context）
+- 执行的命令为 `Get-NetRoute -AddressFamily IPv4 -DestinationPrefix '0.0.0.0/0'`。
+- 该命令仅用于读取默认路由，没有修改网络配置。
+
+### 建议修复（Suggested Fix）
+在管理员 PowerShell 中运行该命令，或由用户执行 `ipconfig` 并查看具有默认网关的适配器。
+
+### 元数据（Metadata）
+- Reproducible: unknown
+- Related Files: .learnings/ERRORS.md
+- See Also: none
 
 ---
