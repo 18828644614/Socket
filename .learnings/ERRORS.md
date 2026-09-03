@@ -171,6 +171,41 @@ Wsl/Service/CreateInstance/E_ACCESSDENIED
 
 ---
 
+## [ERR-20260901-007] powershell_new_item_literalpath
+
+**Logged**: 2026-09-01T16:31:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: infra
+
+### 摘要（Summary）
+在 PowerShell 中创建 C++ 学习库根目录时，将 `New-Item` 与不受支持的 `-LiteralPath` 参数组合，命令在创建前失败。
+
+### 原始错误（Error）
+```text
+New-Item:
+A parameter cannot be found that matches parameter name 'LiteralPath'.
+```
+
+### 上下文（Context）
+- 尝试执行的命令为 `New-Item -ItemType Directory -LiteralPath 'E:\Linux\C++' -Force`。
+- 目标目录尚不存在，失败没有产生文件或目录改动。
+
+### 建议修复（Suggested Fix）
+对 `New-Item` 使用 `-Path`，并将路径作为单一字符串参数传入。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: E:\Linux\C++
+- See Also: none
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-09-01T16:31:00+08:00
+- **Commit/PR**: none
+- **Notes**: 已改用 `New-Item -Path` 继续创建目录。
+
+---
+
 ## [ERR-20260828-003] mingw_link_order_check
 
 **Logged**: 2026-08-28T15:55:00+08:00
