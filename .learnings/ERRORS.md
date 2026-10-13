@@ -35,6 +35,37 @@ apply_patch verification failed: Failed to read E:\Linux\socket\发送与接收�
 
 ---
 
+## [ERR-20261014-002] mingw_std_thread_unavailable
+
+**Logged**: 2026-10-14T00:33:19+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: tests
+
+### 摘要（Summary）
+当前本机 MinGW-w64 GCC 7.3.0 的 C++ 标准库没有提供可用的 `std::thread` 定义，因此无法用该工具链完整编译新的 Windows C++ 示例。
+
+### 原始错误（Error）
+```text
+<stdin>: In function 'int main()':
+<stdin>:68:14: error: 'thread' is not a member of 'std'
+```
+
+### 上下文（Context）
+- 使用 `g++ -std=c++17 -Wall -Wextra -Werror` 从章节代码块编译 Windows C++ 示例。
+- 当前环境为 `g++ 7.3.0 (x86_64-win32-seh-rev0)`。
+- C++ 锁片段可通过语法检查；失败点是完整示例中的 `std::thread` 支持。
+
+### 建议修复（Suggested Fix）
+使用 Visual Studio C++ 开发者命令提示符，或安装提供 C++11 线程库的较新 MinGW-w64，再执行文档中的编译命令。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 04-并发与I-O模型/线程与进程模型.md
+- See Also: ERR-20261014-001
+
+---
+
 ## [ERR-20260831-001] node_static_check_command
 
 **Logged**: 2026-08-31T15:00:00+08:00
@@ -396,5 +427,35 @@ Get-NetRoute:
 - Reproducible: unknown
 - Related Files: .learnings/ERRORS.md
 - See Also: none
+
+---
+
+## [ERR-20261014-001] wsl_linux_example_verification
+
+**Logged**: 2026-10-14T00:08:14+08:00
+**Priority**: medium
+**Status**: pending
+**Area**: tests
+
+### 摘要（Summary）
+本章 Linux 代码块已定位，但当前 Windows 环境无法启动 WSL 虚拟机，因此暂时不能完成 Linux 侧编译验证。
+
+### 原始错误（Error）
+```text
+Wsl/Service/CreateInstance/CreateVm/HCS/HCS_E_HYPERV_NOT_INSTALLED
+```
+
+### 上下文（Context）
+- 第一次抽取检查没有考虑 Linux 代码块标题后还有一段说明文字；调整为从标题后查找代码围栏后，已正确定位代码。
+- 随后通过 `wsl gcc -Wall -Wextra -O2 -pthread -x c -` 编译时，WSL 提示需要启用虚拟化，未能启动 Linux 实例。
+- Windows 示例已使用 MinGW 编译，并在本机完成两个客户端同时回显测试。
+
+### 建议修复（Suggested Fix）
+在已启用虚拟化且可启动 WSL 的 Ubuntu 环境中，编译 `server_linux.c` 与 `process_linux.c`；当前章节给出的 GCC 命令可直接用于复核。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 04-并发与I-O模型/线程与进程模型.md
+- See Also: ERR-20260828-002, ERR-20260901-005
 
 ---

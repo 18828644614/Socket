@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3e879c14c30e8af2",
+            "id": "00385a9a777cf82c",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -24,21 +24,7 @@
             }
           },
           {
-            "id": "00385a9a777cf82c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "04-并发与I-O模型/阻塞与非阻塞.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "阻塞与非阻塞"
-            }
-          },
-          {
-            "id": "833f47358b313b2c",
+            "id": "c1c6c0957f6c53db",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -114,8 +100,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "765e0dd354fdd260",
@@ -217,19 +202,21 @@
       "bases:新建数据库": false
     }
   },
-  "active": "00385a9a777cf82c",
+  "active": "c1c6c0957f6c53db",
   "lastOpenFiles": [
-    "04-并发与I-O模型/线程与进程模型.md",
+    "04-并发与I-O模型/I-O多路复用.md",
     "04-并发与I-O模型/阻塞与非阻塞.md",
+    "04-并发与I-O模型/线程与进程模型.md",
+    "NUL.exe",
+    "04-并发与I-O模型/README.md",
+    "03-UDP Socket/广播与组播.md",
     "src/select_windows_demo/win_select_server.exe",
     "src/select_windows_demo/win_select_server.c",
     "src/select_windows_demo/run_client.ps1",
     "src/select_windows_demo",
-    "04-并发与I-O模型/README.md",
     "02-TCP Socket/TCP服务器.md",
     "03-UDP Socket/README.md",
     "03-UDP Socket/UDP可靠性设计.md",
-    "03-UDP Socket/广播与组播.md",
     "03-UDP Socket/数据报与地址.md",
     "03-UDP Socket/UDP基础.md",
     "02-TCP Socket/README.md",
@@ -250,9 +237,7 @@
     "src/socket_echo",
     "task_notes.md",
     "src/socket/server.c说明.md",
-    "src/socket/client.c",
     "task_plan.md",
-    "tcp_server_notes.md",
-    "01-基础入门/README.md"
+    "tcp_server_notes.md"
   ]
 }
