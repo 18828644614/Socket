@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "00385a9a777cf82c",
+            "id": "3e879c14c30e8af2",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -24,17 +24,17 @@
             }
           },
           {
-            "id": "c1c6c0957f6c53db",
+            "id": "3f539ec57ec26413",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04-并发与I-O模型/线程与进程模型.md",
+                "file": "04-并发与I-O模型/状态机与连接管理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线程与进程模型"
+              "title": "状态机与连接管理"
             }
           }
         ],
@@ -100,7 +100,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "765e0dd354fdd260",
@@ -202,14 +203,21 @@
       "bases:新建数据库": false
     }
   },
-  "active": "c1c6c0957f6c53db",
+  "active": "3f539ec57ec26413",
   "lastOpenFiles": [
-    "04-并发与I-O模型/I-O多路复用.md",
-    "04-并发与I-O模型/阻塞与非阻塞.md",
-    "04-并发与I-O模型/线程与进程模型.md",
-    "NUL.exe",
+    "state_client.py",
+    "state_server_linux.c",
+    "state_server_windows.c",
+    "task_plan.md",
+    "04-并发与I-O模型/并发聊天室项目.md",
     "04-并发与I-O模型/README.md",
-    "03-UDP Socket/广播与组播.md",
+    "04-并发与I-O模型/状态机与连接管理.md",
+    "04-并发与I-O模型/事件循环.md",
+    "04-并发与I-O模型/I-O多路复用.md",
+    "04-并发与I-O模型/event_loop_echo_windows_simple.exe",
+    "04-并发与I-O模型/event_loop_echo_windows_simple.cpp",
+    "04-并发与I-O模型/线程与进程模型.md",
+    "04-并发与I-O模型/阻塞与非阻塞.md",
     "src/select_windows_demo/win_select_server.exe",
     "src/select_windows_demo/win_select_server.c",
     "src/select_windows_demo/run_client.ps1",
@@ -217,6 +225,7 @@
     "02-TCP Socket/TCP服务器.md",
     "03-UDP Socket/README.md",
     "03-UDP Socket/UDP可靠性设计.md",
+    "03-UDP Socket/广播与组播.md",
     "03-UDP Socket/数据报与地址.md",
     "03-UDP Socket/UDP基础.md",
     "02-TCP Socket/README.md",
@@ -228,16 +237,9 @@
     "02-TCP Socket/TCP客户端.md",
     "02-TCP Socket/Socket基础.md",
     "02-TCP Socket/TCP聊天室项目.md",
-    "04-并发与I-O模型/并发聊天室项目.md",
     "03-UDP Socket/UDP客户端与服务器.md",
     "src/socket_echo/client.exe",
     "src/socket_echo/server.exe",
-    "src/socket_echo/client.c",
-    "src/socket_echo/server.c",
-    "src/socket_echo",
-    "task_notes.md",
-    "src/socket/server.c说明.md",
-    "task_plan.md",
-    "tcp_server_notes.md"
+    "task_notes.md"
   ]
 }
