@@ -8,13 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3e879c14c30e8af2",
+            "id": "3f539ec57ec26413",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04-并发与I-O模型/README.md",
+                "file": "05-协议与工程实践/README.md",
                 "mode": "source",
                 "source": false
               },
@@ -24,17 +24,17 @@
             }
           },
           {
-            "id": "3f539ec57ec26413",
+            "id": "49373c720b684c91",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "04-并发与I-O模型/状态机与连接管理.md",
+                "file": "05-协议与工程实践/应用层协议设计.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "状态机与连接管理"
+              "title": "应用层协议设计"
             }
           }
         ],
@@ -100,8 +100,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "765e0dd354fdd260",
@@ -203,15 +202,16 @@
       "bases:新建数据库": false
     }
   },
-  "active": "3f539ec57ec26413",
+  "active": "49373c720b684c91",
   "lastOpenFiles": [
+    "05-协议与工程实践/README.md",
+    "04-并发与I-O模型/状态机与连接管理.md",
     "state_client.py",
     "state_server_linux.c",
     "state_server_windows.c",
     "task_plan.md",
     "04-并发与I-O模型/并发聊天室项目.md",
     "04-并发与I-O模型/README.md",
-    "04-并发与I-O模型/状态机与连接管理.md",
     "04-并发与I-O模型/事件循环.md",
     "04-并发与I-O模型/I-O多路复用.md",
     "04-并发与I-O模型/event_loop_echo_windows_simple.exe",
@@ -239,7 +239,6 @@
     "02-TCP Socket/TCP聊天室项目.md",
     "03-UDP Socket/UDP客户端与服务器.md",
     "src/socket_echo/client.exe",
-    "src/socket_echo/server.exe",
     "task_notes.md"
   ]
 }
