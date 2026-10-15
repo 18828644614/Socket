@@ -459,3 +459,31 @@ Wsl/Service/CreateInstance/CreateVm/HCS/HCS_E_HYPERV_NOT_INSTALLED
 - See Also: ERR-20260828-002, ERR-20260901-005
 
 ---
+
+## [ERR-20261015-HB1] wsl_missing_c_compiler
+
+**Logged**: 2026-10-15T14:17:21+08:00
+**Priority**: low
+**Status**: pending
+**Area**: tests
+
+### 摘要（Summary）
+WSL Ubuntu 当前可以启动，但没有安装 C 编译器；不能将 Windows MinGW 检查结果当作 Linux 编译验证。
+
+### 原始错误（Error）
+```text
+/bin/bash: line 1: gcc: command not found
+```
+
+### 上下文（Context）
+验证《心跳、超时与重连》的独立 Linux C 示例时，查询未找到 gcc/clang，只有 Python 可用。Windows 示例已实际编译并完成故障实验。
+
+### 建议修复（Suggested Fix）
+在已具备 C 编译环境的 Linux 上复核；Ubuntu 可安装 build-essential。本次未修改系统软件，章节已明确 Linux 未实测。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 05-协议与工程实践/心跳、超时与重连.md
+- See Also: ERR-20261014-001
+
+---

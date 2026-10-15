@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3f539ec57ec26413",
+            "id": "63b824a945f6e807",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -24,17 +24,17 @@
             }
           },
           {
-            "id": "49373c720b684c91",
+            "id": "b133bb6760bae241",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "05-协议与工程实践/应用层协议设计.md",
+                "file": "05-协议与工程实践/心跳、超时与重连.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "应用层协议设计"
+              "title": "心跳、超时与重连"
             }
           }
         ],
@@ -100,7 +100,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "765e0dd354fdd260",
@@ -202,16 +203,20 @@
       "bases:新建数据库": false
     }
   },
-  "active": "49373c720b684c91",
+  "active": "b133bb6760bae241",
   "lastOpenFiles": [
+    "05-协议与工程实践/日志、监控与调试.md",
+    "05-协议与工程实践/心跳、超时与重连.md",
     "05-协议与工程实践/README.md",
+    "05-协议与工程实践/消息格式与版本.md",
+    "05-协议与工程实践/应用层协议设计.md",
+    "04-并发与I-O模型/README.md",
     "04-并发与I-O模型/状态机与连接管理.md",
     "state_client.py",
     "state_server_linux.c",
     "state_server_windows.c",
     "task_plan.md",
     "04-并发与I-O模型/并发聊天室项目.md",
-    "04-并发与I-O模型/README.md",
     "04-并发与I-O模型/事件循环.md",
     "04-并发与I-O模型/I-O多路复用.md",
     "04-并发与I-O模型/event_loop_echo_windows_simple.exe",
@@ -235,10 +240,6 @@
     "02-TCP Socket/发送与接收数据.md",
     "02-TCP Socket/TCP回显项目.md",
     "02-TCP Socket/TCP客户端.md",
-    "02-TCP Socket/Socket基础.md",
-    "02-TCP Socket/TCP聊天室项目.md",
-    "03-UDP Socket/UDP客户端与服务器.md",
-    "src/socket_echo/client.exe",
-    "task_notes.md"
+    "src/socket_echo/client.exe"
   ]
 }
