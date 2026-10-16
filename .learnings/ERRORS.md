@@ -487,3 +487,66 @@ WSL Ubuntu 当前可以启动，但没有安装 C 编译器；不能将 Windows 
 - See Also: ERR-20261014-001
 
 ---
+## [ERR-20261015-001] skill_path_alias_resolution
+
+**Logged**: 2026-10-15T00:00:00+08:00
+**Priority**: low
+**Status**: pending
+**Area**: config
+
+### 摘要（Summary）
+首次读取技能文件时把技能根别名 `r0` 误当成了实际目录名，导致路径不存在。
+
+### 原始错误（Error）
+```
+Get-Content: Cannot find path 'C:\Users\Administrator\.codex\skills\r0\obra-superpowers-using-superpowers\SKILL.md' because it does not exist.
+```
+
+### 上下文（Context）
+- 用户请求讲解 `E:\MarkDown\Socket\05-协议与工程实践\心跳、超时与重连.md` 中的 Windows 示例代码。
+- 技能清单说明 `r0` 是 `C:/Users/Administrator/.codex/skills` 的别名，而不是文件系统中的一级目录。
+
+### 建议修复（Suggested Fix）
+读取技能文件时先展开技能根别名，再拼接技能目录与 `SKILL.md`。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: E:\MarkDown\Socket\05-协议与工程实践\心跳、超时与重连.md
+- Tags: skills, path-resolution
+- See Also: 
+
+---
+
+## [ERR-20261016-SEC] security_chapter_edit_and_probe
+
+**Logged**: 2026-10-16T10:10:35+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: docs
+
+### 摘要（Summary）
+扩充安全章节时遇到补丁同路径操作冲突；Windows 慢发送测试还需处理连接中止结果，文档检查脚本的代码块数量预期也已校正。
+
+### 原始错误（Error）
+```text
+apply_patch verification failed: invalid patch: multiple operations target E:\MarkDown\Socket\05-协议与工程实践\安全与输入校验.md
+ConnectionAbortedError: [WinError 10053]
+AssertionError: 5
+```
+
+### 上下文（Context）
+同一补丁删除后再新增同一路径会被拒绝。慢发送后，Windows 可能报告连接重置或中止，不能只匹配 EOF。检查脚本误把实际 5 个 C 代码块预设为 6 个，未影响正文代码。
+
+### 建议修复（Suggested Fix）
+整体替换文件使用 Update File；断开测试兼容 EOF、reset、abort，并继续将 socket.timeout 视为失败；文档结构检查以真实代码块划分核对。
+
+### 元数据（Metadata）
+- Reproducible: yes
+- Related Files: 05-协议与工程实践/安全与输入校验.md
+- See Also: ERR-20260901-001
+
+### 解决情况（Resolution）
+- **Resolved**: 2026-10-16T10:10:35+08:00
+- **Notes**: 已使用更新补丁完成正文，Windows 21 项协议测试和额外会话期限测试通过，结构检查通过。
+
+---
